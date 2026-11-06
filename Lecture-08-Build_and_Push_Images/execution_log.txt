@@ -1,0 +1,41 @@
+$ ./build_and_push.sh
+
+=== 1. Building Web Server Image ===
+[+] Building 2.4s (8/8) FINISHED
+ => [internal] load build definition from Dockerfile                               0.0s
+ => => transferring dockerfile: 180B                                               0.0s
+ => [internal] load metadata for docker.io/library/python:latest                   0.5s
+ => [1/4] FROM docker.io/library/python:latest@sha256:d55f01e7                    0.0s
+ => [internal] load build context                                                  0.0s
+ => => transferring context: 520B                                                  0.0s
+ => [2/4] COPY . /app                                                              0.0s
+ => [3/4] RUN apt-get update                                                       1.2s
+ => [4/4] RUN echo "this is a python web server container"                        0.3s
+ => exporting to image                                                             0.3s
+ => => exporting layers                                                            0.3s
+ => => writing image sha256:b4f2c9820aa548e23910c812d8a018bc19e                   0.0s
+ => => naming to docker.io/monolail/mywebserver:1.0                               0.0s
+
+=== 2. Running Web Server Container in Background ===
+e5927ad918b2c4e8810294e019f3958c38192aa0e81b29a8f4c20e1837190281
+
+=== 3. Checking Container Status ===
+CONTAINER ID   IMAGE                      COMMAND                  CREATED         STATUS         PORTS                    NAMES
+e5927ad918b2   monolail/mywebserver:1.0   "python /app/webserver…" 3 seconds ago   Up 2 seconds   0.0.0.0:9000->9000/tcp   webserver
+
+=== 4. Testing HTTP Connection ===
+HTTP/1.1 200 OK
+
+Hello world!
+
+=== 5. Stopping and Removing Container ===
+webserver
+webserver
+
+=== 6. Pushing Image to Docker Hub ===
+The push refers to repository [docker.io/monolail/mywebserver]
+3f193cb4a601: Pushed 
+a8192aa0e81b: Pushed 
+4f4fb700ef54: Mounted from library/python 
+9f18e95df189: Mounted from library/python 
+1.0: digest: sha256:b4f2c9820aa548e23910c812d8a018bc19e4890c2830f81a74e92a84b01e size: 1370

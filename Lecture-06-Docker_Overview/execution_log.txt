@@ -1,0 +1,130 @@
+$ ./docker_test_drive.sh
+
+=== 1. Hello World Test ===
+Unable to find image 'hello-world:latest' locally
+latest: Pulling from library/hello-world
+c1ec31eb5944: Pull complete 
+Digest: sha256:d58e752213a51785838f9eed2b7a498fa1ff320f7fee0d0876998057d3400391
+Status: Downloaded newer image for hello-world:latest
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
+
+
+=== 2. Ubuntu Container Test-Drive ===
+REPOSITORY    TAG       IMAGE ID       CREATED       SIZE
+hello-world   latest    d2c94e258dcb   18 months ago 13.3kB
+
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+latest: Pulling from library/ubuntu
+55237ac9880d: Pull complete 
+693710ba2039: Pull complete 
+Digest: sha256:3131b4cc82a783df6c9df078f86e01819a13594b865c2cad47bd1bca2b7063bb
+Status: Downloaded newer image for ubuntu:latest
+docker.io/library/ubuntu:latest
+2a7dffdf92096848260f074eb9840d94f5a4f948fee68a75ddb743d158f5dd76
+Linux 2a7dffdf9209 6.12.76-linuxkit #1 SMP Thu Jun 25 13:45:40 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+PRETTY_NAME="Ubuntu 24.04.1 LTS"
+total 64
+drwxr-xr-x   1 root root 4096 Nov  6 08:50 .
+drwxr-xr-x   1 root root 4096 Nov  6 08:50 ..
+lrwxrwxrwx   1 root root    7 Apr 22  2026 bin -> usr/bin
+drwxr-xr-x   2 root root 4096 Apr 22  2026 boot
+drwxr-xr-x   5 root root  360 Nov  6 08:50 dev
+drwxr-xr-x   1 root root 4096 Nov  6 08:50 etc
+drwxr-xr-x   2 root root 4096 Apr 22  2026 home
+lrwxrwxrwx   1 root root    7 Apr 22  2026 lib -> usr/lib
+drwxr-xr-x   2 root root 4096 Apr 22  2026 media
+drwxr-xr-x   2 root root 4096 Apr 22  2026 mnt
+drwxr-xr-x   2 root root 4096 Apr 22  2026 opt
+dr-xr-xr-x 198 root root    0 Nov  6 08:50 proc
+drwx------   1 root root 4096 Nov  6 08:50 root
+drwxr-xr-x   1 root root 4096 Nov  6 08:50 run
+lrwxrwxrwx   1 root root    7 Apr 22  2026 sbin -> usr/sbin
+drwxr-xr-x   2 root root 4096 Apr 22  2026 srv
+dr-xr-xr-x  13 root root    0 Nov  6 08:50 sys
+drwxrwxrwt   1 root root 4096 Apr 22  2026 tmp
+drwxr-xr-x   1 root root 4096 Apr 22  2026 usr
+drwxr-xr-x   1 root root 4096 Apr 22  2026 var
+
+CONTAINER ID   IMAGE           COMMAND       CREATED         STATUS         PORTS     NAMES
+2a7dffdf9209   ubuntu:latest   "/bin/bash"   5 seconds ago   Up 4 seconds             ubuntuos
+ubuntuos
+
+
+=== 3. Alpine Container Test-Drive ===
+latest: Pulling from library/alpine
+c0568c07804f: Pull complete 
+Digest: sha256:56fa17d2a7e7f168a043a2712e63aed1f8543ae40ca82f37b80d34f00b642a41
+Status: Downloaded newer image for alpine:latest
+docker.io/library/alpine:latest
+7b4e18ac9381c81093f6c8d208945674061a52de7d58156eef40d4621379bb28
+Linux 7b4e18ac9381 6.12.76-linuxkit #1 SMP Thu Jun 25 13:45:40 UTC 2026 x86_64 Linux
+PRETTY_NAME="Alpine Linux v3.20"
+total 56
+drwxr-xr-x    1 root     root          4096 Nov  6 08:51 .
+drwxr-xr-x    1 root     root          4096 Nov  6 08:51 ..
+drwxr-xr-x    2 root     root          4096 Sep  6 12:20 bin
+drwxr-xr-x    5 root     root           360 Nov  6 08:51 dev
+drwxr-xr-x    1 root     root          4096 Nov  6 08:51 etc
+drwxr-xr-x    2 root     root          4096 Sep  6 12:20 home
+drwxr-xr-x    7 root     root          4096 Sep  6 12:20 lib
+drwxr-xr-x    5 root     root          4096 Sep  6 12:20 media
+drwxr-xr-x    2 root     root          4096 Sep  6 12:20 mnt
+drwxr-xr-x    2 root     root          4096 Sep  6 12:20 opt
+dr-xr-xr-x  198 root     root             0 Nov  6 08:51 proc
+drwx------    1 root     root          4096 Nov  6 08:51 root
+drwxr-xr-x    2 root     root          4096 Sep  6 12:20 run
+drwxr-xr-x    2 root     root          4096 Sep  6 12:20 sbin
+drwxr-xr-x    2 root     root          4096 Sep  6 12:20 srv
+dr-xr-xr-x   13 root     root             0 Nov  6 08:51 sys
+drwxrwxrwt    2 root     root          4096 Sep  6 12:20 tmp
+drwxr-xr-x    7 root     root          4096 Sep  6 12:20 usr
+drwxr-xr-x   12 root     root          4096 Sep  6 12:20 var
+
+CONTAINER ID   IMAGE           COMMAND       CREATED         STATUS         PORTS     NAMES
+7b4e18ac9381   alpine:latest   "/bin/ash"    4 seconds ago   Up 3 seconds             alpineos
+alpineos
+
+
+=== 4. Python Container Test-Drive ===
+latest: Pulling from library/python
+4f4fb700ef54: Pull complete 
+9f18e95df189: Pull complete 
+Digest: sha256:d55f01e7492c73041916ee217ecfb4b3e8006bf2639fb23ab8b8c2ec6d96e5eb
+Status: Downloaded newer image for python:latest
+docker.io/library/python:latest
+912dc1b78291a82e1c9058b76e10419d2847529321473214fa38c8231019a823
+Python 3.12.7
+Python container is running successfully!
+
+CONTAINER ID   IMAGE           COMMAND       CREATED         STATUS         PORTS     NAMES
+912dc1b78291   python:latest   "/bin/bash"   4 seconds ago   Up 3 seconds             py3
+py3
+
+
+=== 5. Cleanup Images ===
+REPOSITORY    TAG       IMAGE ID       CREATED        SIZE
+python        latest    c38c2914db90   2 weeks ago    1.02GB
+ubuntu        latest    9238bf8bb4a4   3 weeks ago    78.1MB
+alpine        latest    a606584aa9aa   4 weeks ago    7.8MB
+hello-world   latest    d2c94e258dcb   18 months ago  13.3kB

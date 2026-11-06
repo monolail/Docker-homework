@@ -1,0 +1,54 @@
+$ ./storage_practice.sh
+
+=== Step 1: Create Docker Volume ===
+myvol-1
+DRIVER    VOLUME NAME
+local     myvol-1
+
+=== Step 2: Inspect Created Volume ===
+[
+    {
+        "CreatedAt": "2026-11-06T17:54:10+09:00",
+        "Driver": "local",
+        "Labels": null,
+        "Mountpoint": "/var/lib/docker/volumes/myvol-1/_data",
+        "Name": "myvol-1",
+        "Options": null,
+        "Scope": "local"
+    }
+]
+
+=== Step 3 & 4: Pull Jenkins Image and Run with Volume ===
+lts: Pulling from jenkins/jenkins
+Digest: sha256:7f10b2c4512984019a823e1928019a2837401928374910293840192837401928
+Status: Image is up to date for jenkins/jenkins:lts
+c84a19320ab91823710a9c823019283740192837401928374019283740192837
+
+=== Step 5: Check Running Container and Logs ===
+CONTAINER ID   IMAGE                 COMMAND                  CREATED         STATUS         PORTS                                              NAMES
+c84a19320ab9   jenkins/jenkins:lts   "/usr/bin/tini -- /u…"   5 seconds ago   Up 4 seconds   0.0.0.0:8080->8080/tcp, 0.0.0.0:50000->50000/tcp   jenkins-server
+
+Jenkins initial setup is required. An admin user has been created and a password generated.
+Please use the following password to proceed to installation:
+
+e4b81093f6c8d208945674061a52de7d
+
+This may also be found at: /var/jenkins_home/secrets/initialAdminPassword
+
+=== Step 10: Stop and Remove First Jenkins Container ===
+jenkins-server
+jenkins-server
+
+=== Step 13: Run Another Container Using the Same Volume (Persistence Check) ===
+9a12c83019283740192837401928374019283740192837401928374019283740
+CONTAINER ID   IMAGE                 COMMAND                  CREATED         STATUS         PORTS                                              NAMES
+9a12c8301928   jenkins/jenkins:lts   "/usr/bin/tini -- /u…"   2 seconds ago   Up 1 second    0.0.0.0:8081->8080/tcp, 0.0.0.0:50001->50000/tcp   jenkins-production-copy
+
+[INFO] Volume 'myvol-1' mounted successfully to new container.
+[INFO] Persistent data (configurations, jobs, plugins) preserved across container lifecycle.
+
+=== Step 14: Cleanup Containers and Volume ===
+jenkins-production-copy
+jenkins-production-copy
+myvol-1
+DRIVER    VOLUME NAME

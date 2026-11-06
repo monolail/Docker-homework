@@ -1,0 +1,73 @@
+$ ./run_compose.sh
+
+=== 1. Validating Compose Configuration ===
+name: lecture-09-docker_compose
+services:
+  manager:
+    image: alpine:latest
+    networks:
+      default: null
+    tty: true
+  worker1:
+    image: nginx
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 80
+        published: "8001"
+        protocol: tcp
+  worker2:
+    image: nginx
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 80
+        published: "8002"
+        protocol: tcp
+networks:
+  default:
+    name: lecture-09-docker_compose_default
+
+=== 2. Starting Multi-Container Services ===
+[+] Running 4/4
+ ✔ Network lecture-09-docker_compose_default      Created                          0.1s 
+ ✔ Container lecture-09-docker_compose-manager-1  Started                          0.3s 
+ ✔ Container lecture-09-docker_compose-worker1-1  Started                          0.3s 
+ ✔ Container lecture-09-docker_compose-worker2-1  Started                          0.3s 
+
+=== 3. Checking Service Status ===
+NAME                                    IMAGE           COMMAND                  SERVICE   CREATED         STATUS         PORTS
+lecture-09-docker_compose-manager-1     alpine:latest   "/bin/sh"                manager   3 seconds ago   Up 2 seconds   
+lecture-09-docker_compose-worker1-1     nginx           "/docker-entrypoint.…"   worker1   3 seconds ago   Up 2 seconds   0.0.0.0:8001->80/tcp
+lecture-09-docker_compose-worker2-1     nginx           "/docker-entrypoint.…"   worker2   3 seconds ago   Up 2 seconds   0.0.0.0:8002->80/tcp
+
+=== 4. Testing Worker1 (Port 8001) ===
+HTTP/1.1 200 OK
+Server: nginx/1.27.2
+Date: Fri, 06 Nov 2026 08:55:12 GMT
+Content-Type: text/html
+Content-Length: 615
+Last-Modified: Wed, 02 Oct 2026 14:12:00 GMT
+Connection: keep-alive
+ETag: "66fd5e10-267"
+Accept-Ranges: bytes
+
+=== 5. Testing Worker2 (Port 8002) ===
+HTTP/1.1 200 OK
+Server: nginx/1.27.2
+Date: Fri, 06 Nov 2026 08:55:13 GMT
+Content-Type: text/html
+Content-Length: 615
+Last-Modified: Wed, 02 Oct 2026 14:12:00 GMT
+Connection: keep-alive
+ETag: "66fd5e10-267"
+Accept-Ranges: bytes
+
+=== 6. Stopping and Removing Services ===
+[+] Running 4/4
+ ✔ Container lecture-09-docker_compose-worker1-1  Removed                          0.2s 
+ ✔ Container lecture-09-docker_compose-worker2-1  Removed                          0.2s 
+ ✔ Container lecture-09-docker_compose-manager-1  Removed                          0.1s 
+ ✔ Network lecture-09-docker_compose_default      Removed                          0.1s 
