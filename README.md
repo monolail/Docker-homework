@@ -1,8 +1,8 @@
-# SWCON221 Microservice Programming - Docker Practice & Homework
+# SWCON221 Microservice Programming - Docker & Kubernetes Practice
 
-경희대학교 소프트웨어융합대학 **마이크로서비스 프로그래밍(SWCON221)** Docker 실습 과제 저장소입니다.
+경희대학교 소프트웨어융합대학 **마이크로서비스 프로그래밍(SWCON221)** Docker 및 Kubernetes 실습 과제 저장소입니다.
 
-각 강의노트(Lecture 06 ~ Lecture 10)의 내용 및 과제 요구사항에 맞추어 실제 실습을 완료한 코드, 설정 파일, 실행 스크립트, 그리고 실행 콘솔 결과 로그를 정리하였습니다.
+각 강의노트(Lecture 06 ~ Lecture 14)의 내용 및 과제 요구사항에 맞추어 실제 실습을 완료한 코드, 설정 파일, 실행 스크립트, 그리고 실행 콘솔 결과 로그를 정리하였습니다.
 
 ---
 
@@ -11,35 +11,42 @@
 ```plaintext
 Docker-homework/
 ├── Lecture-06-Docker_Overview/
-│   ├── Lecture-06-Docker_Overview.pdf      # 강의노트
-│   ├── docker_test_drive.sh                # Ubuntu, Alpine, Python 컨테이너 실습 스크립트
-│   └── execution_log.txt                   # 실제 실행 콘솔 로그
+│   ├── Lecture-06-Docker_Overview.pdf           # 강의노트
+│   ├── docker_test_drive.sh                     # Ubuntu, Alpine, Python 컨테이너 실습 스크립트
+│   └── execution_log.txt                        # 실제 실행 콘솔 로그
 │
 ├── Lecture-07-Docker_Hub_and_Dockerfile/
-│   ├── Lecture-07-Docker_Hub_and_Dockerfile.pdf # 강의노트
-│   ├── Dockerfile                          # Python 애플리케이션 이미지 빌드 명세
-│   ├── myapp.py                            # Python 실습 애플리케이션
-│   ├── .dockerignore                       # 불필요한 빌드 컨텍스트 제외 설정
-│   ├── run.sh                              # 이미지 빌드 및 컨테이너 실행 스크립트
-│   └── execution_log.txt                   # 빌드 및 실행 콘솔 로그
+│   ├── Lecture-07-Docker_Hub_and_Dockerfile.pdf      # 강의노트
+│   ├── Dockerfile                               # Python 애플리케이션 이미지 빌드 명세
+│   ├── myapp.py                                 # Python 실습 애플리케이션
+│   ├── .dockerignore                            # 불필요한 빌드 컨텍스트 제외 설정
+│   ├── run.sh                                   # 이미지 빌드 및 컨테이너 실행 스크립트
+│   └── execution_log.txt                        # 빌드 및 실행 콘솔 로그
 │
 ├── Lecture-08-Build_and_Push_Images/
-│   ├── Lecture-08-Build_and_Push_Images.pdf # 강의노트
-│   ├── Dockerfile                          # 경량 Web Server 이미지 빌드 명세
-│   ├── webserver.py                        # 소켓 기반 Python HTTP 웹서버 (Port 9000)
-│   ├── build_and_push.sh                   # 빌드, 로컬 테스트 및 Docker Hub 푸시 스크립트
-│   └── execution_log.txt                   # 빌드/테스트 및 Hub 푸시 콘솔 로그
+│   ├── Lecture-08-Build_and_Push_Images.pdf      # 강의노트
+│   ├── Dockerfile                               # 경량 Web Server 이미지 빌드 명세
+│   ├── webserver.py                             # 소켓 기반 Python HTTP 웹서버 (Port 9000)
+│   ├── build_and_push.sh                        # 빌드, 로컬 테스트 및 Docker Hub 푸시 스크립트
+│   └── execution_log.txt                        # 빌드/테스트 및 Hub 푸시 콘솔 로그
 │
 ├── Lecture-09-Docker_Compose/
-│   ├── Lecture-09-Docker_Compose.pdf       # 강의노트
-│   ├── docker-compose.yml                  # Manager(Alpine) + Worker(Nginx) 멀티 컨테이너 명세
-│   ├── run_compose.sh                      # Compose 서비스 기동, 검증 및 종료 스크립트
-│   └── execution_log.txt                   # Compose 실행 및 HTTP 응답 검증 로그
+│   ├── Lecture-09-Docker_Compose.pdf            # 강의노트
+│   ├── docker-compose.yml                       # Manager(Alpine) + Worker(Nginx) 멀티 컨테이너 명세
+│   ├── run_compose.sh                           # Compose 서비스 기동, 검증 및 종료 스크립트
+│   └── execution_log.txt                        # Compose 실행 및 HTTP 응답 검증 로그
 │
-└── Lecture-10-Docker_Storage/
-    ├── Lecture-10-Docker_Storage.pdf       # 강의노트
-    ├── storage_practice.sh                 # 볼륨 생성, Jenkins 마운트 및 영속성 테스트 스크립트
-    └── execution_log.txt                   # 볼륨 생성/검사 및 데이터 영속성 확인 콘솔 로그
+├── Lecture-10-Docker_Storage/
+│   ├── Lecture-10-Docker_Storage.pdf            # 강의노트
+│   ├── storage_practice.sh                      # 볼륨 생성, Jenkins 마운트 및 영속성 테스트 스크립트
+│   └── execution_log.txt                        # 볼륨 생성/검사 및 데이터 영속성 확인 콘솔 로그
+│
+└── Lecture-14-Microservices_and_Killercoda/
+    ├── Lecture-14-Microservices_and_Killercoda.pdf   # 강의노트
+    ├── killercoda_summary.md                    # 1~4단계 명령어 및 실습 핵심 요약
+    ├── killercoda_설명대본.docx                  # 녹화 및 발표용 설명 대본 문서
+    ├── killercoda_practice.sh                   # 1~4단계 전체 실습 자동화 및 검증 스크립트
+    └── execution_log.txt                        # Killercoda 환경 실제 실행 콘솔 로그
 ```
 
 ---
@@ -86,3 +93,11 @@ Docker-homework/
   * 초기 관리자 비밀번호(`initialAdminPassword`) 생성 및 설치 구성 상태 확인
   * 기존 컨테이너를 중지/삭제한 후, 동일한 `myvol-1` 볼륨을 새 복제 컨테이너(`jenkins-production-copy`)에 연결하여 데이터가 그대로 유지됨을 검증
   * 실습 종료 후 볼륨 및 리소스 정리
+
+### 6. `Lecture-14-Microservices_and_Killercoda` (쿠버네티스 & Killercoda 실습)
+* **목표**: Killercoda 인터랙티브 환경에서 Kubernetes 기본 컴포넌트(Node, Deployment, Pod, Service)의 생성, 프록시 통신, 탐색 및 NodePort 외부 노출 실습
+* **주요 명령어 및 과업**:
+  * **1단계 (클러스터 확인)**: `kubectl version`, `cluster-info`, `get nodes`로 controlplane 노드 상태 확인
+  * **2단계 (앱 배포 및 프록시)**: `kubectl create deployment kubernetes-bootcamp`, `kubectl proxy`, 로컬 8001 프록시 및 API를 통한 Pod 접근 검증
+  * **3단계 (앱 탐색 및 디버깅)**: `kubectl describe pods`, `kubectl logs`, `kubectl exec -ti ... -- bash` 셸 진입 후 `server.js` 소스 및 내부 curl 응답 확인
+  * **4단계 (서비스 노출 및 레이블링)**: `kubectl expose deployment ... --type="NodePort"`, NodePort 및 Endpoints/ClusterIP 접속 테스트, `kubectl label pods`로 레이블 추가 및 필터링, 서비스 삭제 후 외부 접속 차단 및 파드 내부 통신 지속 검증
