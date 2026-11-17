@@ -2,7 +2,7 @@
 
 경희대학교 소프트웨어융합대학 **마이크로서비스 프로그래밍(SWCON221)** Docker 및 Kubernetes 실습 과제 저장소입니다.
 
-각 강의노트(Lecture 06 ~ Lecture 14)의 내용 및 과제 요구사항에 맞추어 실제 실습을 완료한 코드, 설정 파일, 실행 스크립트, 그리고 실행 콘솔 결과 로그를 정리하였습니다.
+각 강의노트(Lecture 06 ~ Lecture 16)의 내용 및 과제 요구사항에 맞추어 실제 실습을 완료한 코드, 설정 파일, 실행 스크립트, 실행 콘솔 결과 로그, 그리고 실습 인증 스크린샷을 정리하였습니다.
 
 ---
 
@@ -41,12 +41,20 @@ Docker-homework/
 │   ├── storage_practice.sh                      # 볼륨 생성, Jenkins 마운트 및 영속성 테스트 스크립트
 │   └── execution_log.txt                        # 볼륨 생성/검사 및 데이터 영속성 확인 콘솔 로그
 │
-└── Lecture-14-Microservices_and_Killercoda/
-    ├── Lecture-14-Microservices_and_Killercoda.pdf   # 강의노트
-    ├── killercoda_summary.md                    # 1~4단계 명령어 및 실습 핵심 요약
-    ├── killercoda_설명대본.docx                  # 녹화 및 발표용 설명 대본 문서
-    ├── killercoda_practice.sh                   # 1~4단계 전체 실습 자동화 및 검증 스크립트
-    └── execution_log.txt                        # Killercoda 환경 실제 실행 콘솔 로그
+├── Lecture-14-Microservices_and_Killercoda/
+│   ├── Lecture-14-Microservices_and_Killercoda.pdf   # 강의노트
+│   ├── killercoda_summary.md                    # 1~4단계 명령어 및 실습 핵심 요약
+│   ├── killercoda_설명대본.docx                  # 녹화 및 발표용 설명 대본 문서
+│   ├── killercoda_practice.sh                   # 1~4단계 전체 실습 자동화 및 검증 스크립트
+│   └── execution_log.txt                        # Killercoda 환경 실제 실행 콘솔 로그
+│
+└── Lecture-16-Controllers/
+    ├── Lecture-16-Controllers.pdf               # 강의노트
+    ├── simple-pod.yaml                          # Nginx + Redis 멀티 컨테이너 Pod 매니페스트
+    ├── simple-replicaset.yaml                   # 3개 복제본 유지를 위한 ReplicaSet 매니페스트
+    ├── practice_controllers.sh                  # Pod 및 ReplicaSet 자가 치유 실습 스크립트
+    ├── execution_log.txt                        # 자가 치유 및 라벨 셀렉터 검증 콘솔 로그
+    └── screen/                                  # 실습 단계별 인증 스크린샷 7장
 ```
 
 ---
@@ -101,3 +109,11 @@ Docker-homework/
   * **2단계 (앱 배포 및 프록시)**: `kubectl create deployment kubernetes-bootcamp`, `kubectl proxy`, 로컬 8001 프록시 및 API를 통한 Pod 접근 검증
   * **3단계 (앱 탐색 및 디버깅)**: `kubectl describe pods`, `kubectl logs`, `kubectl exec -ti ... -- bash` 셸 진입 후 `server.js` 소스 및 내부 curl 응답 확인
   * **4단계 (서비스 노출 및 레이블링)**: `kubectl expose deployment ... --type="NodePort"`, NodePort 및 Endpoints/ClusterIP 접속 테스트, `kubectl label pods`로 레이블 추가 및 필터링, 서비스 삭제 후 외부 접속 차단 및 파드 내부 통신 지속 검증
+
+### 7. `Lecture-16-Controllers` (컨트롤러 및 ReplicaSet 자가 치유 실습)
+* **목표**: Multi-Container Pod 및 ReplicaSet을 직접 작성·배포하고, 파드 장애 시 컨트롤러가 파드 수를 자동으로 복구하는 자가 치유(Self-Healing) 및 라벨 셀렉터 실습 (실제 실습 캡처 포함)
+* **주요 명령어 및 과업**:
+  * **Part 1 (멀티 컨테이너 Pod)**: `simple-pod.yaml`을 직접 작성하여 Nginx + Redis + shared volume(`emptyDir`)으로 구성된 Pod를 배포하고, `kubectl exec`를 통해 각 컨테이너 내부 환경 및 redis 버전을 개별 확인
+  * **Part 2 (ReplicaSet & 자가 치유)**: `simple-replicaset.yaml`을 작성하여 3개의 파드 복제본(`replicas: 3`)을 배포하고, 임의의 파드 1개를 강제 삭제(`kubectl delete pod`)했을 때 ReplicaSet 컨트롤러가 즉각 새로운 파드를 생성하여 3개를 유지하는 자가 치유 기능 검증
+  * **Part 3 (라벨 셀렉터 조회 및 정리)**: `--selector app=my-little-pod`, `--selector app=my-replicaset` 옵션을 통해 라벨 기반 리소스 필터링을 실습하고 전체 리소스 정리
+  * **실습 인증 스크린샷**: `screen/` 폴더 내에 실습 과정 캡처 이미지(7장) 수록

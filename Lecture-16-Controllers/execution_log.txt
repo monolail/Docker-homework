@@ -1,0 +1,156 @@
+$ ./practice_controllers.sh
+
+==========================================
+Part 1: Multi-Container Pod Practice (simple-pod.yaml)
+==========================================
+>>> 1-1. Initial Cluster Status
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   59m
+
+>>> 1-2. Apply simple-pod.yaml
+pod/my-little-pod created
+
+>>> 1-3. Waiting for Pod to be Ready (2/2 Containers)
+NAME                READY   STATUS    RESTARTS   AGE
+pod/my-little-pod   2/2     Running   0          16s
+
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   60m
+
+>>> 1-4. Execute Shell in 'nginx' Container
+Linux my-little-pod 6.12.76-linuxkit #1 SMP Thu Jun 25 13:45:40 UTC 2026 aarch64 GNU/Linux
+
+>>> 1-5. Check Redis Server Version in 'redis' Container
+Redis server v=8.8.0 sha=00000000:1 malloc=jemalloc-5.3.0 bits=64 build=25cf6baa3b28e0dc
+
+>>> 1-6. Delete Multi-Container Pod
+pod "my-little-pod" deleted from default namespace
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   60m
+
+==========================================
+Part 2: ReplicaSet Practice (simple-replicaset.yaml)
+==========================================
+>>> 2-1. Apply simple-replicaset.yaml (replicas: 3)
+replicaset.apps/my-replicaset created
+
+>>> 2-2. Check Created ReplicaSet and Pods
+NAME                          READY   STATUS    RESTARTS   AGE
+pod/my-replicaset-94d7m       2/2     Running   0          48s
+pod/my-replicaset-9wngp       2/2     Running   0          48s
+pod/my-replicaset-vbbkk       2/2     Running   0          48s
+
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   63m
+
+NAME                            DESIRED   CURRENT   READY   AGE
+replicaset.apps/my-replicaset   3         3         3       48s
+
+Name:         my-replicaset
+Namespace:    default
+Selector:     app=my-little-pod
+Labels:       app=my-replicaset
+Annotations:  <none>
+Replicas:     3 current / 3 desired
+Pods Status:  3 Running / 0 Waiting / 0 Succeeded / 0 Failed
+Pod Template:
+  Labels:  app=my-little-pod
+  Containers:
+   nginx:
+    Image:        nginx:latest
+    Port:         80/TCP
+    Host Port:    0/TCP
+    Environment:  <none>
+    Mounts:       <none>
+   redis:
+    Image:        redis
+    Port:         <none>
+    Host Port:    <none>
+    Environment:  <none>
+    Mounts:
+      /data/redis from redis-storage (rw)
+  Volumes:
+   redis-storage:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:     
+    SizeLimit:  <unset>
+Events:
+  Type    Reason            Age   From                   Message
+  ----    ------            ----  ----                   -------
+  Normal  SuccessfulCreate  48s   replicaset-controller  Created pod: my-replicaset-94d7m
+  Normal  SuccessfulCreate  48s   replicaset-controller  Created pod: my-replicaset-9wngp
+  Normal  SuccessfulCreate  48s   replicaset-controller  Created pod: my-replicaset-vbbkk
+
+>>> 2-3. Inspect One of the Replicated Pods
+Selected Pod: my-replicaset-94d7m
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2026-11-17T13:13:00Z"
+  generateName: my-replicaset-
+  generation: 1
+  labels:
+    app: my-little-pod
+  name: my-replicaset-94d7m
+  namespace: default
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: ReplicaSet
+    name: my-replicaset
+    uid: f08aedc0-c6ac-4dd1-ab68-a10ba29b7c40
+  resourceVersion: "6381"
+  uid: e2e04223-3954-42ca-801e-6c5821abf995
+spec:
+  containers:
+  - image: nginx:latest
+    imagePullPolicy: Always
+    name: nginx
+    ports:
+    - containerPort: 80
+      protocol: TCP
+  - image: redis
+    imagePullPolicy: Always
+    name: redis
+    volumeMounts:
+    - mountPath: /data/redis
+      name: redis-storage
+
+>>> 2-4. Execute Commands inside Replicated Pod
+Linux my-replicaset-94d7m 6.12.76-linuxkit #1 SMP Thu Jun 25 13:45:40 UTC 2026 aarch64 GNU/Linux
+Redis server v=8.8.0 sha=00000000:1 malloc=jemalloc-5.3.0 bits=64 build=25cf6baa3b28e0dc
+
+>>> 2-5. Test Self-Healing: Delete a Pod and Observe Auto-Recreation
+Deleting pod my-replicaset-94d7m...
+pod "my-replicaset-94d7m" deleted from default namespace
+Checking cluster state immediately after deletion:
+NAME                          READY   STATUS    RESTARTS   AGE
+pod/my-replicaset-9wngp       2/2     Running   0          7m24s
+pod/my-replicaset-c67pt       2/2     Running   0          7s
+pod/my-replicaset-vbbkk       2/2     Running   0          7m24s
+
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   70m
+
+NAME                            DESIRED   CURRENT   READY   AGE
+replicaset.apps/my-replicaset   3         3         3       7m24s
+
+[INFO] Pod 'my-replicaset-94d7m' was terminated.
+[INFO] ReplicaSet immediately spawned new replacement pod 'my-replicaset-c67pt' to maintain desired replica count (3). Self-healing verified!
+
+>>> 2-6. Label Selector Filtering
+[Selector: app=my-little-pod]
+NAME                          READY   STATUS    RESTARTS   AGE
+pod/my-replicaset-9wngp       2/2     Running   0          8m8s
+pod/my-replicaset-c67pt       2/2     Running   0          51s
+pod/my-replicaset-vbbkk       2/2     Running   0          8m8s
+
+[Selector: app=my-replicaset]
+NAME                            DESIRED   CURRENT   READY   AGE
+replicaset.apps/my-replicaset   3         3         3       8m12s
+
+>>> 2-7. Cleanup ReplicaSet
+replicaset.apps "my-replicaset" deleted from default namespace
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   71m
